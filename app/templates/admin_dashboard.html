@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Admin Dashboard</h1>
+      <div class="stats">
+        <div class="stat-card">Grievances: {{ grievance_count }}</div>
+        <div class="stat-card">Notices: {{ notice_count }}</div>
+        <div class="stat-card">Pending Approvals: {{ pending_count }}</div>
+      </div>
+
+      <section class="card">
+        <h2>Add Notice</h2>
+        <form action="{{ url_for('notices_api') }}" method="post">
+          <input type="text" name="title" placeholder="Notice title" required />
+          <textarea name="body" placeholder="Notice body" required></textarea>
+          <button type="submit">Save Notice</button>
+        </form>
+        <ul>
+          {% for notice in notices %}
+          <li><strong>{{ notice.title }}</strong> — {{ notice.body }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Add Mandi Rate</h2>
+        <form action="{{ url_for('mandi_rates_api') }}" method="post">
+          <input type="text" name="crop" placeholder="Crop" required />
+          <input type="text" name="price" placeholder="Price" required />
+          <input type="text" name="unit" placeholder="Unit" value="quintal" />
+          <button type="submit">Save Rate</button>
+        </form>
+        <ul>
+          {% for rate in mandi_rates %}
+          <li><strong>{{ rate.crop }}</strong>: {{ rate.price }} / {{ rate.unit }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Add Emergency Contact</h2>
+        <form action="{{ url_for('contacts_api') }}" method="post">
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="text" name="phone" placeholder="Phone" required />
+          <input type="text" name="role" placeholder="Role" required />
+          <button type="submit">Save Contact</button>
+        </form>
+        <ul>
+          {% for contact in contacts %}
+          <li><a href="tel:{{ contact.phone }}">{{ contact.name }} — {{ contact.role }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Development Work Upload</h2>
+        <form action="{{ url_for('works_api') }}" method="post" enctype="multipart/form-data">
+          <input type="text" name="title" placeholder="Work title" required />
+          <textarea name="description" placeholder="Description" required></textarea>
+          <input type="text" name="budget_status" placeholder="Budget status" required />
+          <input type="file" name="image" />
+          <button type="submit">Upload Work</button>
+        </form>
+        <ul>
+          {% for work in works %}
+          <li><strong>{{ work.title }}</strong> — {{ work.budget_status }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Scheme & Job Manager</h2>
+        <form action="{{ url_for('schemes_api') }}" method="post" class="inline-form">
+          <input type="text" name="name" placeholder="Scheme name" required />
+          <textarea name="description" placeholder="Scheme description" required></textarea>
+          <input type="text" name="link" placeholder="PDF or link" />
+          <button type="submit">Save Scheme</button>
+        </form>
+        <form action="{{ url_for('jobs_api') }}" method="post" class="inline-form">
+          <input type="text" name="title" placeholder="Job title" required />
+          <textarea name="description" placeholder="Job description" required></textarea>
+          <input type="text" name="link" placeholder="Link" />
+          <button type="submit">Save Job</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Business Approvals</h2>
+        <form action="{{ url_for('businesses_api') }}" method="post">
+          <input type="text" name="name" placeholder="Business name" required />
+          <input type="text" name="category" placeholder="Category" required />
+          <input type="text" name="phone" placeholder="Phone" required />
+          <textarea name="address" placeholder="Address" required></textarea>
+          <button type="submit">Add Business</button>
+        </form>
+        <ul>
+          {% for business in businesses %}
+          <li><strong>{{ business.name }}</strong> — {{ business.category }} — {{ 'Approved' if business.approved else 'Pending' }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Grievance Inbox</h2>
+        <ul>
+          {% for grievance in grievances %}
+          <li><strong>{{ grievance.subject }}</strong> — {{ grievance.description }} ({{ grievance.status }})</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <a class="btn" href="{{ url_for('admin_logout') }}">Logout</a>
+    </main>
+  </body>
+</html>

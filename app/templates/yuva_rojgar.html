@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yuva Rojgar & Education | Dhodhsar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Yuva Rojgar & Education</h1>
+      <section class="card">
+        <h2>Local Job Board</h2>
+        <ul>
+          {% for job in jobs %}
+          <li><strong>{{ job.title }}</strong> — {{ job.description }}
+            {% if job.link %}
+            <br /><a href="{{ job.link }}" target="_blank">More info</a>
+            {% endif %}
+          </li>
+          {% else %}
+          <li>No jobs posted yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Admission Alerts</h2>
+        <p>School admission notices will be managed by the admin in the next phase.</p>
+      </section>
+      <p><a class="btn" href="{{ url_for('home') }}">Back to home</a></p>
+    </main>
+  </body>
+</html>

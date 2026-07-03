@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Krishi Mitra | Dhodhsar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Krishi Mitra</h1>
+      <p>Daily agricultural updates for the village farmers.</p>
+      <section class="card">
+        <h2>Mandi Rates</h2>
+        <ul>
+          {% for rate in mandi_rates %}
+          <li><strong>{{ rate.crop }}</strong>: {{ rate.price }} / {{ rate.unit }}</li>
+          {% else %}
+          <li>No mandi rates available yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+      <section class="card">
+        <h2>3-Day Weather</h2>
+        <p>Weather updates will be connected here in the next step.</p>
+      </section>
+      <p><a class="btn" href="{{ url_for('home') }}">Back to home</a></p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhodhsar Gram Vikas Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Dhodhsar • गाँव विकास • डिजिटल सेवाएँ</p>
+        <h1>Welcome to Dhodhsar Gram Vikas Portal</h1>
+        <p>Fast access to notices, farmer support, grievance filing, schemes, jobs, and local business info.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#grievance">Submit Grievance</a>
+          <a class="btn btn-secondary" href="{{ url_for('admin_login') }}">Admin Login</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <nav class="top-nav">
+        <a href="{{ url_for('krishi_mitra') }}">Krishi Mitra</a>
+        <a href="{{ url_for('digital_panchayat') }}">Digital Panchayat</a>
+        <a href="{{ url_for('sarkari_seva') }}">Sarkari Seva</a>
+        <a href="{{ url_for('yuva_rojgar') }}">Yuva Rojgar</a>
+        <a href="{{ url_for('bazaar') }}">Dhodhsar Bazaar</a>
+      </nav>
+
+      <section class="card">
+        <h2>Notice Board</h2>
+        <ul>
+          {% for notice in notices %}
+          <li><strong>{{ notice.title }}</strong> — {{ notice.body }}</li>
+          {% else %}
+          <li>No notices yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Emergency Contacts</h2>
+        <ul>
+          {% for contact in contacts %}
+          <li><a href="tel:{{ contact.phone }}">{{ contact.name }} — {{ contact.role }}</a></li>
+          {% else %}
+          <li>No contacts yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Latest Mandi Rates</h2>
+        <ul>
+          {% for rate in mandi_rates %}
+          <li><strong>{{ rate.crop }}</strong>: {{ rate.price }} / {{ rate.unit }}</li>
+          {% else %}
+          <li>No rates available.</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Latest Development Work</h2>
+        <ul>
+          {% for work in works %}
+          <li><strong>{{ work.title }}</strong> — {{ work.budget_status }}</li>
+          {% else %}
+          <li>No work updates yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card" id="grievance">
+        <h2>Online Grievance</h2>
+        <form action="{{ url_for('grievances_api') }}" method="post">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="text" name="phone" placeholder="Phone" required />
+          <input type="text" name="subject" placeholder="Subject" required />
+          <textarea name="description" placeholder="Describe the issue" required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Popular Services</h2>
+        <ul>
+          <li><a href="{{ url_for('sarkari_seva') }}">Government Scheme Center</a></li>
+          <li><a href="{{ url_for('yuva_rojgar') }}">Job Board and Education Alerts</a></li>
+          <li><a href="{{ url_for('bazaar') }}">Local Bazaar Directory</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sarkari Seva | Dhodhsar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Sarkari Seva</h1>
+      <section class="card">
+        <h2>Government Scheme Finder</h2>
+        <p>Use the admin-managed scheme center below.</p>
+        <ul>
+          {% for scheme in schemes %}
+          <li><strong>{{ scheme.name }}</strong> — {{ scheme.description }}
+            {% if scheme.link %}
+            <br /><a href="{{ scheme.link }}" target="_blank">Open / Download</a>
+            {% endif %}
+          </li>
+          {% else %}
+          <li>No schemes published yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+      <p><a class="btn" href="{{ url_for('home') }}">Back to home</a></p>
+    </main>
+  </body>
+</html>

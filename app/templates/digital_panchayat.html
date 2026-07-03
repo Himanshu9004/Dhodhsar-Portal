@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Panchayat | Dhodhsar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Digital Panchayat</h1>
+      <p>Track village development progress and submit grievances.</p>
+      <section class="card">
+        <h2>Development Works</h2>
+        {% for work in works %}
+        <article class="card">
+          <h3>{{ work.title }}</h3>
+          <p>{{ work.description }}</p>
+          <p><strong>Budget Status:</strong> {{ work.budget_status }}</p>
+          {% if work.image %}
+          <img src="{{ url_for('static', filename=work.image) }}" alt="{{ work.title }}" style="max-width: 100%; border-radius: 10px;" />
+          {% endif %}
+        </article>
+        {% else %}
+        <p>No development work updates yet.</p>
+        {% endfor %}
+      </section>
+      <p><a class="btn" href="{{ url_for('home') }}">Back to home</a></p>
+    </main>
+  </body>
+</html>

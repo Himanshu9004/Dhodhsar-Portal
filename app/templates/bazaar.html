@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhodhsar Bazaar | Dhodhsar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Dhodhsar Bazaar</h1>
+      <section class="card">
+        <h2>Approved Local Businesses</h2>
+        {% for business in businesses %}
+        <article class="card">
+          <h3>{{ business.name }}</h3>
+          <p><strong>Category:</strong> {{ business.category }}</p>
+          <p><strong>Phone:</strong> <a href="tel:{{ business.phone }}">{{ business.phone }}</a></p>
+          <p><strong>Address:</strong> {{ business.address }}</p>
+        </article>
+        {% else %}
+        <p>No approved businesses yet.</p>
+        {% endfor %}
+      </section>
+      <p><a class="btn" href="{{ url_for('home') }}">Back to home</a></p>
+    </main>
+  </body>
+</html>
